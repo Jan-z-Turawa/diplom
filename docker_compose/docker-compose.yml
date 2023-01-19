@@ -1,0 +1,49 @@
+version: '3.3'
+services: 
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: dip
+      MYSQL_USER: dip
+      MYSQL_PASSWORD: dip
+      MYSQL_ROOT_PASSWORD: 123p[]123
+    volumes:
+      - mysql:/var/lib/mysql
+      - /tmp/db_init:/tmp/db_init
+    restart: unless-stopped
+    networks:
+      - backend
+
+  php:
+    image: my-php-app:latest
+    container_name: php
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  proxy:
+    image: nginx:latest
+    container_name: proxy
+    ports: 
+      - 80:80
+    volumes:
+      - ./nginxfull.conf:/etc/nginx/nginx.conf
+      - /tmp/git/predict_score/web:/var/www/html
+    restart: unless-stopped
+    depends_on:
+      - db
+      - php
+    networks:
+      - backend
+
+
+volumes:
+  mysql:
+  web:
+    
+networks:
+  backend:
