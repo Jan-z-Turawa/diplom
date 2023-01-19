@@ -1,10 +1,17 @@
 Vagrant is required to run
+
 Vagrantfile runs Ubuntu in VirtualBox
+
 Docker and Docker Compose are installed in Ubuntu
+
 Then a repository is cloned
+
 Build an image with php-fpm and scripts
+
 Run the database servers and nginx web server from the repository folder
+
 Install Jenkins agent and initialize the database
+
 When pushing to github to the main branch on the webhook, the new image build process is started
 
 ## Available Scripts
